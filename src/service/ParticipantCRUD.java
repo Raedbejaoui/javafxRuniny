@@ -21,7 +21,7 @@ import utils.MyDB;
 public class ParticipantCRUD {
 
     public ParticipantCRUD() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
         public void ajouterParticipant(Participant p) {
          
@@ -70,14 +70,7 @@ public class ParticipantCRUD {
             System.err.println (ex.getMessage());      
                     }
        }
-        public void modifierParticipant(){
-             try {
-            String requete5 = "Update participant SET id_parti='12' Where Id_parti='2'";
-            Statement st = new MyDB().getConnection().createStatement();
-            st.executeUpdate(requete5);
-            System.out.println("participant modifier avec succÃ©s");
-        } catch (SQLException ex) {
-            System.err.println (ex.getMessage());     
-        }
-       } 
+ 
+
 }
+

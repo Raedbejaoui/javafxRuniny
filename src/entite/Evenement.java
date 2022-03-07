@@ -7,16 +7,22 @@ package entite;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import javax.activation.DataSource;
+import utils.MyDB;
 
 /**
  *
  * @author pc
  */
+
+
 public class Evenement {
    private int idEvent,prix;
    private String descri,nom;
    private Date dateEvent;
 
+   
+   
     public Evenement(int idEvent, int prix, String descri, String nom, Date dateEvent) {
         this.idEvent = idEvent;
         this.prix = prix;
@@ -33,16 +39,10 @@ public class Evenement {
     }
 
     public Evenement() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
-    public Evenement(String nom, String descri, String prix, Date dateEven) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Evenement(String nom, String descri, String prix, LocalDate dateEven) {
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
    
 

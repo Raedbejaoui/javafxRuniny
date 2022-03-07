@@ -5,6 +5,7 @@
  */
 package service;
 import entite.Evenement;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,18 @@ import utils.MyDB;
  * @author pc
  */
 public class EvenementCRUD {
+    
+   
+    private PreparedStatement pst;
+    private ResultSet rs;
+    private Connection cnx;
+
+    public EvenementCRUD() {
+         cnx=MyDB.getInstance().getConnection();
+    }
+    
+    
+    
         public void ajouterEvenement2(Evenement e) {
         String requete2 = "INSERT INTO events (prix,descri,nom,dateEven) VALUES(?,?,?,?)";
 
@@ -45,6 +58,7 @@ public class EvenementCRUD {
             ResultSet rs = st.executeQuery(requete3);
             while (rs.next()) {
                 Evenement e = new Evenement();
+                e.setIdEvent(rs.getInt("idEven"));
                 e.setDateEvent(rs.getDate("dateEven"));
                 e.setNom(rs.getString("nom"));
                 e.setDescri("descri");
@@ -57,24 +71,44 @@ public class EvenementCRUD {
 
         return myList;
     }
- public void modifierEvenement() {
+ public void modifierEvenement(Evenement t) {
         try {
-            String requete5 = "Update Events SET nom='SPORT' Where idEven='1'";
+            String requete5 = "UPDATE events SET nom='"+t.getNom()+"',"
+                + " dateEven='"+t.getDateEvent()+"', prix='"+t.getPrix()+"', descri='"+t.getDescri()+"' "
+                + "WHERE idEven ='"+t.getIdEvent()+"'";
             Statement st = new MyDB().getConnection().createStatement();
             st.executeUpdate(requete5);
-            System.out.println("evenement modifier avec succÃ©s");
+            System.out.println("evenement modifier avec succès "+t.getIdEvent());
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
 }
  }
     public void supprimerEvenement() {
         try {
-            String requete4 = "DELETE FROM Events WHERE idEven='1'";
+            String requete4 = "DELETE FROM Events WHERE idEven='?'";
             Statement st = new MyDB().getConnection().createStatement();
             st.executeUpdate(requete4);
             System.out.println("Evenement supprimer avec succÃ©s");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+    }
+
+//   
+   public boolean modifier(Evenement t) {
+      
+        boolean update= true;
+        String query = "UPDATE events SET nom='"+t.getNom()+"',"
+                + " dateEven='"+t.getDateEvent()+"', prix='"+t.getPrix()+"', descri='"+t.getDescri()+"' "
+                + "WHERE idEven ='"+t.getIdEvent()+"'"; 
+        try {
+            Statement st =cnx.createStatement();
+            st.executeUpdate(query);
+            System.out.println("l'evenement a été bien modifier");
+            
+        } catch (SQLException ex) { 
+            System.out.println(ex.getMessage());
+        }
+        return update;
     }
 }

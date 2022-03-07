@@ -19,17 +19,20 @@ import utils.MyDB;
 public class main {
           public static void main (String[] args){
      MyDB.getInstance();
-       EvenementCRUD ecd = new EvenementCRUD();
+       //EvenementCRUD ecd = new EvenementCRUD();
+       //Evenement e= new Evenement();
        //ecd.ajouterEvenement();
      
        //  ajout d'un evenement//
-      // Evenement e = new Evenement(2,"ssasa","xx",new Date(122, 3, 30));
+     // Evenement e = new Evenement(2,2,"sami","jj",new Date(14,07,2022));
+      //int prix, String descri, String nom, Date dateEvent
        //ecd.ajouterEvenement2(e);
         //System.out.println(ecd.afficherEvenements());
         //ecd.supprimerEvenement();
-        //ecd.modifierEvenement();
+       // ecd.modifierEvenement(e);
     //ajouter participant
-    //ParticipantCRUD ps = new ParticipantCRUD ();
+  //  ParticipantCRUD ps = new ParticipantCRUD ();
+
    
             
 }

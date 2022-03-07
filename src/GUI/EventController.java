@@ -27,9 +27,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import service.EvenementCRUD;
 import utils.MyDB;
+
 
 /**
  * FXML Controller class
@@ -39,15 +41,18 @@ import utils.MyDB;
 public class EventController implements Initializable {
 
     @FXML
-    private ListView<String> tflist;
+    private ListView<Evenement> tflist;
     @FXML
     private TextField tfprix;
     @FXML
     private TextField tfdesc;
     @FXML
-    private TextField tfnom;
+    private TextField tfnom ;
+    @FXML
+    private TextField ideven;
     @FXML
     private DatePicker tfdate;
+    static Evenement selectedItemm;
 
     /**
      * Initializes the controller class.
@@ -56,22 +61,9 @@ public class EventController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         MyDB ds = new MyDB();
         Connection cnx = ds.getConnection();
-        String req = "SELECT * from events";
-        try {
-            Statement st = cnx.createStatement();
-            ResultSet rs = st.executeQuery(req);
-            while (rs.next()) {
-                String nom = rs.getString("nom");
-                int Prix = rs.getInt("Prix");
-                String descri = rs.getString("descri");
-                Date dateEven = rs.getDate("dateEven");
-                String list = nom + "  /  " + Prix + "  /  "  + descri + "  /  "  + dateEven ;
-                tflist.getItems().add(list);
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+//       
+         EvenementCRUD cs = new EvenementCRUD();
+        tflist.getItems().addAll(cs.afficherEvenements());
     }    
 
     @FXML
@@ -91,12 +83,22 @@ public class EventController implements Initializable {
         e.setPrix(prix);
         EvenementCRUD ed = new EvenementCRUD();
         ed.ajouterEvenement2(e);
-       tflist.getItems().add(e.toString());
+       tflist.getItems().add(e);
     }
 
     @FXML
     private void modifier(ActionEvent event) {
- 
+         Evenement e = new Evenement();
+         EvenementCRUD ed = new EvenementCRUD();
+         e.setIdEvent(Integer.parseInt(ideven.getText()));
+         e.setNom(tfnom.getText());
+         e.setDateEvent(new Date(2022, 3, 30));
+         e.setPrix(Integer.parseInt(tfprix.getText()));
+         e.setDescri(tfdesc.getText());
+         ed.modifierEvenement(e);
+         tflist.getItems().clear();
+         EvenementCRUD cs = new EvenementCRUD();
+         tflist.getItems().addAll(cs.afficherEvenements());
     }
     
     @FXML
@@ -113,6 +115,20 @@ public class EventController implements Initializable {
         window.setScene(scene3);
         window.show(); 
     }
+
+    @FXML
+   private void index3(MouseEvent event) {
+        selectedItemm = tflist.getSelectionModel().getSelectedItem();
+        tfnom.setText(String.valueOf(selectedItemm.getNom()));
+        tfdesc.setText(String.valueOf(selectedItemm.getDescri()));
+        tfprix.setText(String.valueOf(selectedItemm.getPrix()));
+        ideven.setText(String.valueOf(selectedItemm.getIdEvent()));
+        
+    }
+
+   
+
+    
     }
 
   
